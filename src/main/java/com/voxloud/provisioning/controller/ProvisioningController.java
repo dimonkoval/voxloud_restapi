@@ -1,9 +1,6 @@
 package com.voxloud.provisioning.controller;
 
-import com.voxloud.provisioning.exception.DeviceNotFoundException;
-import com.voxloud.provisioning.exception.UnsupportedDeviceException;
 import com.voxloud.provisioning.service.ProvisioningService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

@@ -15,7 +15,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class ProvisioningServiceImplTest {
+class ProvisioningServiceImplTest {
 
     @Mock
     private DeviceRepository deviceRepository;
@@ -36,7 +36,7 @@ public class ProvisioningServiceImplTest {
     }
 
     @Test
-    public void testGetProvisioningFile_Success_DeskModel() throws Exception {
+    void testGetProvisioningFile_Success_DeskModel() throws Exception {
         when(deviceRepository.findById(testDevice.getMacAddress())).thenReturn(Optional.of(testDevice));
         when(provisioningProperties.getDomain()).thenReturn("sip.mydomain.com");
         when(provisioningProperties.getPort()).thenReturn("5161");
@@ -53,22 +53,26 @@ public class ProvisioningServiceImplTest {
     }
 
     @Test
-    public void testGetProvisioningFile_DeviceNotFound() {
+    void testGetProvisioningFile_DeviceNotFound() {
         when(deviceRepository.findById(testDevice.getMacAddress())).thenReturn(Optional.empty());
 
-        Exception exception = assertThrows(DeviceNotFoundException.class, () -> {
-            provisioningService.getProvisioningFile(testDevice.getMacAddress());
-        });
+        DeviceNotFoundException exception = assertThrows(
+                DeviceNotFoundException.class,
+                () -> provisioningService.getProvisioningFile(testDevice.getMacAddress())
+        );
 
         assertEquals("Device with MAC address " + testDevice.getMacAddress() + " not found", exception.getMessage());
     }
 
     @Test
-    public void testGetProvisioningFileDeviceNotFound() {
+    void testGetProvisioningFileDeviceNotFound() {
         when(deviceRepository.findById(testDevice.getMacAddress())).thenReturn(Optional.empty());
 
-        assertThrows(DeviceNotFoundException.class, () -> {
-            provisioningService.getProvisioningFile(testDevice.getMacAddress());
-        });
+        DeviceNotFoundException exception = assertThrows(
+                DeviceNotFoundException.class,
+                () -> provisioningService.getProvisioningFile(testDevice.getMacAddress())
+        );
+
+        assertEquals("Device with MAC address " + testDevice.getMacAddress() + " not found", exception.getMessage());
     }
 }

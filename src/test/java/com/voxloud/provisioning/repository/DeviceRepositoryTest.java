@@ -14,20 +14,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 @TestPropertySource(locations = "classpath:application-test.properties")
-public class DeviceRepositoryTest {
+class DeviceRepositoryTest {
     private final String macAddress = "00:1A:2B:3C:4D:5E";
     @Autowired
     private DeviceRepository deviceRepository;
     private Device testDevice;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         testDevice = UtilsTest.createTestDevice();
         deviceRepository.save(testDevice);
     }
 
     @Test
-    public void testFindById() {
+    void testFindById() {
         Optional<Device> foundDevice = deviceRepository.findById(macAddress);
         assertThat(foundDevice).isPresent();
         assertThat(foundDevice.get().getUsername()).isEqualTo(testDevice.getUsername());
@@ -38,14 +38,14 @@ public class DeviceRepositoryTest {
     }
 
     @Test
-    public void testDeleteDevice() {
+    void testDeleteDevice() {
         deviceRepository.delete(testDevice);
         Optional<Device> foundDevice = deviceRepository.findById(macAddress);
         assertThat(foundDevice).isNotPresent();
     }
 
     @Test
-    public void testSaveDevice() {
+    void testSaveDevice() {
         Device newDevice = new Device();
         newDevice.setMacAddress("test");
         deviceRepository.save(newDevice);

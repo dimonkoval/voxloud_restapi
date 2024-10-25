@@ -41,8 +41,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.30</version> <!-- Added -->
-<!--            <optional>true</optional>-->
+            <version>1.18.30</version>
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
@@ -58,13 +57,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
-<!--            <version>2.2.5.RELEASE</version> &lt;!&ndash; Використовуйте ту ж версію Spring Boot &ndash;&gt;-->
-<!--            <exclusions>-->
-<!--                <exclusion>-->
-<!--                    <groupId>org.junit.vintage</groupId>-->
-<!--                    <artifactId>junit-vintage-engine</artifactId>-->
-<!--                </exclusion>-->
-<!--            </exclusions>-->
         </dependency>
             <dependency>
                 <groupId>org.junit.jupiter</groupId>
@@ -96,7 +88,7 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>4.0.0</version> <!-- Або остання версія -->
+            <version>4.0.0</version>
             <scope>test</scope>
         </dependency>
 

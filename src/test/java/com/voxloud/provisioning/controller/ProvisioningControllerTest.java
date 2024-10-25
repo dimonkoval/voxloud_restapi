@@ -3,7 +3,6 @@ package com.voxloud.provisioning.controller;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import com.voxloud.provisioning.UtilsTest;
 import com.voxloud.provisioning.exception.DeviceNotFoundException;
-import com.voxloud.provisioning.exception.UnsupportedDeviceException;
 import com.voxloud.provisioning.service.ProvisioningService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,18 +10,14 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(ProvisioningController.class)
-public class ProvisioningControllerTest {
+class ProvisioningControllerTest {
     private final String macAddress = UtilsTest.MAC_ADDRESS;
     @Autowired
     private MockMvc mockMvc;
@@ -31,7 +26,7 @@ public class ProvisioningControllerTest {
     private ProvisioningService provisioningService;
 
     @Test
-    public void testGetProvisioningFile_Success() throws Exception {
+    void testGetProvisioningFile_Success() throws Exception {
         String provisioningFileContent = "username=user\npassword=pass\n";
         given(provisioningService.getProvisioningFile(macAddress)).willReturn(provisioningFileContent);
 
@@ -42,17 +37,17 @@ public class ProvisioningControllerTest {
     }
 
     @Test
-    public void testGetProvisioningFile_DeviceNotFoundException() throws Exception {
-        String macAddress = "test1";
+    void testGetProvisioningFile_DeviceNotFoundException() throws Exception {
+        String macAddress1 = "test1";
 
-        when(provisioningService.getProvisioningFile(macAddress))
-                .thenThrow(new DeviceNotFoundException("Device with MAC address " + macAddress + " not found"));
+        when(provisioningService.getProvisioningFile(macAddress1))
+                .thenThrow(new DeviceNotFoundException("Device with MAC address " + macAddress1 + " not found"));
 
-        mockMvc.perform(get("/api/v1/provisioning/" + macAddress))
+        mockMvc.perform(get("/api/v1/provisioning/" + macAddress1))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.status").value(404))
                 .andExpect(jsonPath("$.error").value("Not Found"))
-                .andExpect(jsonPath("$.message").value("Device with MAC address " + macAddress + " not found"))
-                .andExpect(jsonPath("$.path").value("uri=/api/v1/provisioning/" + macAddress));
+                .andExpect(jsonPath("$.message").value("Device with MAC address " + macAddress1 + " not found"))
+                .andExpect(jsonPath("$.path").value("uri=/api/v1/provisioning/" + macAddress1));
     }
 }
