@@ -63,16 +63,4 @@ class ProvisioningServiceImplTest {
 
         assertEquals("Device with MAC address " + testDevice.getMacAddress() + " not found", exception.getMessage());
     }
-
-    @Test
-    void testGetProvisioningFileDeviceNotFound() {
-        when(deviceRepository.findById(testDevice.getMacAddress())).thenReturn(Optional.empty());
-
-        DeviceNotFoundException exception = assertThrows(
-                DeviceNotFoundException.class,
-                () -> provisioningService.getProvisioningFile(testDevice.getMacAddress())
-        );
-
-        assertEquals("Device with MAC address " + testDevice.getMacAddress() + " not found", exception.getMessage());
-    }
 }
