@@ -1,11 +1,25 @@
 package com.voxloud.provisioning.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.voxloud.provisioning.exception.DeviceNotFoundException;
+import com.voxloud.provisioning.exception.UnsupportedDeviceException;
+import com.voxloud.provisioning.service.ProvisioningService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/provisioning")
 public class ProvisioningController {
 
-    // TODO Implement controller method
+    private final ProvisioningService provisioningService;
+
+    public ProvisioningController(ProvisioningService provisioningService) {
+        this.provisioningService = provisioningService;
+    }
+
+    @GetMapping("/{macAddress}")
+    public ResponseEntity<String> getProvisioningFile(@PathVariable String macAddress) {
+        String provisioningFile = provisioningService.getProvisioningFile(macAddress);
+        return ResponseEntity.ok(provisioningFile);
+    }
 }
